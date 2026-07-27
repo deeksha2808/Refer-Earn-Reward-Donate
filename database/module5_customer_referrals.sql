@@ -1,0 +1,50 @@
+USE referral_platform;
+
+CREATE TABLE IF NOT EXISTS customer_referrals (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  opportunity_id BIGINT UNSIGNED NOT NULL,
+  opportunity_product_id BIGINT UNSIGNED NULL,
+  business_id BIGINT UNSIGNED NOT NULL,
+  referrer_id BIGINT UNSIGNED NOT NULL,
+  customer_name VARCHAR(150) NOT NULL,
+  customer_phone VARCHAR(25) NOT NULL,
+  customer_email VARCHAR(150) NULL,
+  customer_address VARCHAR(255) NULL,
+  customer_city VARCHAR(100) NULL,
+  customer_state VARCHAR(100) NULL,
+  customer_notes TEXT NULL,
+  product_name VARCHAR(150) NULL,
+  commission_percentage DECIMAL(5,2) NULL,
+  sale_amount DECIMAL(14,2) NULL,
+  calculated_commission DECIMAL(12,2) NULL,
+  invoice_number VARCHAR(100) NULL,
+  sale_date DATE NULL,
+  completion_notes TEXT NULL,
+  completed_at TIMESTAMP NULL,
+  status ENUM('Submitted', 'Under Review', 'Processing', 'Accepted', 'Rejected', 'Completed') NOT NULL DEFAULT 'Submitted',
+  reward_amount DECIMAL(12,2) NOT NULL DEFAULT 0.00,
+  submitted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY customer_referrals_opportunity_index (opportunity_id),
+  KEY customer_referrals_business_index (business_id),
+  KEY customer_referrals_referrer_index (referrer_id),
+  KEY customer_referrals_status_index (status),
+  KEY customer_referrals_product_index (opportunity_product_id),
+  CONSTRAINT customer_referrals_opportunity_fk FOREIGN KEY (opportunity_id) REFERENCES referral_opportunities (id) ON DELETE RESTRICT,
+  CONSTRAINT customer_referrals_business_fk FOREIGN KEY (business_id) REFERENCES users (id) ON DELETE RESTRICT,
+  CONSTRAINT customer_referrals_referrer_fk FOREIGN KEY (referrer_id) REFERENCES users (id) ON DELETE RESTRICT,
+  CONSTRAINT customer_referrals_product_fk FOREIGN KEY (opportunity_product_id) REFERENCES opportunity_products (id) ON DELETE SET NULL,
+  CONSTRAINT customer_referrals_reward_nonnegative CHECK (reward_amount >= 0)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS referral_status_history (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  referral_id BIGINT UNSIGNED NOT NULL,
+  status ENUM('Submitted', 'Under Review', 'Processing', 'Accepted', 'Rejected', 'Completed') NOT NULL,
+  note VARCHAR(255) NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY referral_status_history_referral_index (referral_id),
+  CONSTRAINT referral_status_history_referral_fk FOREIGN KEY (referral_id) REFERENCES customer_referrals (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

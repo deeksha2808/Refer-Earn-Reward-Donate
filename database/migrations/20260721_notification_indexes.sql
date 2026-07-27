@@ -1,0 +1,4 @@
+USE referral_platform;
+-- Module 9 notifications: newest-first inbox and unread count queries.
+SET @sql = IF((SELECT COUNT(*) FROM information_schema.statistics WHERE table_schema=DATABASE() AND table_name='notifications' AND index_name='notifications_user_created_index')=0, 'CREATE INDEX notifications_user_created_index ON notifications (user_id, created_at, id)', 'SELECT 1'); PREPARE notification_stmt FROM @sql; EXECUTE notification_stmt; DEALLOCATE PREPARE notification_stmt;
+SET @sql = IF((SELECT COUNT(*) FROM information_schema.statistics WHERE table_schema=DATABASE() AND table_name='notifications' AND index_name='notifications_user_read_index')=0, 'CREATE INDEX notifications_user_read_index ON notifications (user_id, is_read)', 'SELECT 1'); PREPARE notification_stmt FROM @sql; EXECUTE notification_stmt; DEALLOCATE PREPARE notification_stmt;

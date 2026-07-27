@@ -1,0 +1,20 @@
+.category-control {
+  position: relative;
+}
+
+.category-control .form-control {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.category-control .bi-search,
+.category-control .bi-chevron-down {
+  color: #64748b;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.category-control .bi-search { left: .85rem; }
+.category-control .bi-chevron-down { right: .85rem; }

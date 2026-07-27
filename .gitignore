@@ -1,0 +1,8 @@
+/uploads/*
+!/uploads/.gitkeep
+
+.env
+/vendor/
+/node_modules/
+*.log
+Refer-Earn-Reward-Donate/
