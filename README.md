@@ -422,16 +422,15 @@ This project is developed for learning, portfolio, and educational purposes.
 
 ---
 
-# Author
+## Author
 
-**Deeksha DS**  
-**Darshan Poojary**
-**Arman Shaikh**
-**Nishma H Salian**
+- Deeksha DS
+- Darshan Poojary
+- Arman Shaikh
+- Nishma H Salian
 
 ## GitHub
 
 https://github.com/deeksha2808
----
 
 ⭐ If you found this project useful, consider giving it a star on GitHub!
