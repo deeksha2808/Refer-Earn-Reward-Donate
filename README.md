@@ -426,6 +426,8 @@ This project is developed for learning, portfolio, and educational purposes.
 
 **Deeksha DS**  
 **Darshan Poojary**
+**Arman Shaikh**
+**Nishma H Salian**
 
 ## GitHub
 
